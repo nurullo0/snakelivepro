@@ -1,0 +1,21 @@
+# Snake LIVE PRO - example settings (NO real secrets here).
+# Set these as environment variables on your hosting service. Never put them in the HTML/JS files and never commit real values.
+
+# --- Google Cloud (OAuth client of type "Web application") ---
+GOOGLE_CLIENT_ID=1234567890-abcdef.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=put-your-client-secret-here
+
+# --- Your public server address, exactly as it appears in the browser (https, no trailing slash) ---
+PUBLIC_URL=https://your-app-name.onrender.com
+# Authorized redirect URI to enter in Google Cloud:  PUBLIC_URL + /auth/callback
+#   example: https://your-app-name.onrender.com/auth/callback
+
+# --- Password that protects the admin buttons (Connect / Disconnect / Connect LIVE). Choose a long one. ---
+ADMIN_PASSWORD=choose-a-long-random-password
+
+# --- Optional ---
+# CHAT_POLL_MS=8000     # how often the live chat is read (minimum 2000). 8000 ~ 4 hours/day of default quota
+# QUOTA_LIMIT=10000     # daily YouTube API quota units of your project
+# REFRESH_TOKEN=        # only if your host has no persistent disk: paste the token after the first login
+# TOKEN_FILE=           # where the refresh token is stored (default backend/data/tokens.json)
+# PORT=3000             # most hosts set this automatically

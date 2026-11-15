@@ -1,0 +1,55 @@
+
+:root{color-scheme:dark;--g:#39ff14;--gold:#ffd23f;--red:#ff3b3b}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;color:#fff;-webkit-user-select:none;user-select:none}
+#stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;background:#000;transform-origin:0 0}
+.abs{position:absolute}
+#note{left:90px;top:227px;width:424px;height:78px;border:3px solid var(--red);border-radius:18px;background:#2a0a0a;display:flex;align-items:center;gap:14px;padding:0 14px;box-sizing:border-box;font-weight:800;line-height:1.05;transition:opacity .4s}
+#note b{display:block;font-size:30px;color:#ffc9a0}#note span{font-size:24px}#note i{font-size:44px;font-style:normal}
+#lvl{left:513px;top:242px;height:46px;padding:0 14px;border:3px solid var(--gold);border-radius:24px;color:var(--gold);font-size:30px;font-weight:900;line-height:46px;background:#1a1300}
+#cam{left:700px;top:164px;width:260px;height:146px;background:#111;overflow:hidden;border:2px solid #333}
+#cam video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+#cam em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;color:#666;font-size:22px}
+#gtxt{left:103px;top:318px;font-size:44px;font-weight:800}
+#likes{left:470px;top:335px;width:508px;height:40px;border:2px solid #555;border-radius:20px;background:#0d0d14;overflow:hidden}
+#likes u{position:absolute;inset:0 auto 0 0;background:#5a1a7a;width:0;transition:width .3s}
+#likes p{position:absolute;inset:0;margin:0;text-align:center;font-size:25px;font-weight:900;line-height:38px}
+.card{top:390px;width:106px;height:140px;border-radius:10px;background:#1b1b1b;text-align:center;cursor:pointer}
+.card .ic{font-size:64px;line-height:86px;height:86px}
+.card .nm{font-size:13px;color:#ddd;white-space:nowrap;overflow:hidden}
+.card .pr{font-size:17px;font-weight:800;margin-top:6px}
+.lab{top:535px;width:106px;text-align:center;font-size:19px;font-weight:800;line-height:23px;color:#eee}
+#game{left:105px;top:618px;width:868px;height:868px;border:4px solid var(--g);box-shadow:0 0 22px #39ff1488;box-sizing:content-box;margin:-4px 0 0 -4px}
+#cv{width:868px;height:868px;display:block}
+#ban{left:117px;top:1000px;width:850px;height:175px;background:#fff;color:#000;text-align:center;display:none;box-sizing:border-box;padding-top:6px}
+#ban h1{margin:0;font-size:80px;line-height:100px;font-weight:900;white-space:nowrap}#ban h2{margin:0;font-size:46px;color:#d0121b;font-weight:900;line-height:50px}
+#big{left:0;width:975px;text-align:right;top:1545px;font-size:108px;font-weight:400;font-family:Roboto,"Helvetica Neue",Arial,sans-serif;white-space:nowrap}
+#gg{left:555px;top:1683px;width:412px;height:97px;border:3px solid var(--gold);border-radius:18px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:0 16px;background:#150f00}
+#gg i{font-size:54px;font-style:normal}#gg b,#gg span{display:block;color:#ff6b3d;font-size:30px;line-height:36px;font-weight:900}
+.card svg{width:80px;height:80px;margin-top:4px}
+#chn{left:90px;top:150px;font-size:36px;font-weight:900;color:var(--gold);white-space:nowrap;max-width:600px;overflow:hidden}
+#gn{left:140px;top:760px;width:800px;height:260px;border:5px solid var(--gold);border-radius:30px;background:#1a0f00f2;display:none;align-items:center;gap:30px;padding:0 36px;box-sizing:border-box;z-index:4}
+#gn .gi svg{width:170px;height:170px}#gn b{display:block;font-size:46px;color:var(--gold);white-space:nowrap}#gn span{display:block;font-size:54px;font-weight:900}#gn em{display:block;font-style:normal;font-size:36px;color:#9dff8a;margin-top:6px}
+.pop{animation:pop .35s}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+#over{inset:0;background:#000d;display:none;align-items:center;justify-content:center;font-size:190px;font-weight:900;color:var(--red);text-align:center;line-height:1.1;z-index:5}
+
+#vid{display:none}
+#gn{zoom:var(--pfs,1)}#gn b,#gn em{color:var(--pc,#ffd23f)}#gn{border-color:var(--pc,#ffd23f)}
+#hot{position:fixed;left:0;top:0;width:90px;height:90px;z-index:25;-webkit-touch-callout:none}
+/* control panel: full-screen sheet, big touch targets */
+#panel{position:fixed;inset:0;z-index:30;background:#000e;overflow:auto;display:none;-webkit-overflow-scrolling:touch}
+#panel .sheet{max-width:520px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top,0px)) 14px calc(30px + env(safe-area-inset-bottom,0px));font:16px system-ui,sans-serif;color:#fff}
+#panel h1{font-size:26px;margin:0 0 8px;color:var(--gold)}
+#panel details{background:#141414;border:1px solid #333;border-radius:14px;margin:10px 0;padding:0 12px}
+#panel summary{font-weight:800;font-size:18px;padding:16px 0;cursor:pointer}
+#panel .in{padding:0 0 14px}
+#panel button{min-height:48px;padding:10px 14px;margin:4px 4px 4px 0;border-radius:12px;border:1px solid #555;background:#262626;color:#fff;font:700 16px system-ui}
+#panel button:active{background:#444}#panel button.go{background:var(--g);color:#000;border:0;width:100%;font-size:22px;min-height:60px;margin:8px 0}
+#panel button.warn{background:#5a1a1a}
+#panel input[type=text],#panel input[type=password],#panel input[type=number],#panel select{min-height:44px;padding:8px 10px;border-radius:10px;border:1px solid #444;background:#0c0c0c;color:#fff;font-size:16px;box-sizing:border-box;max-width:100%}
+#panel input[type=text],#panel input[type=password]{width:100%}
+#panel input[type=range]{width:100%;min-height:36px}#panel input[type=checkbox]{width:24px;height:24px;vertical-align:middle}
+#panel .r{display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap}#panel .r label{flex:1 1 140px}
+#panel .badge{display:inline-block;padding:6px 12px;border-radius:20px;font-weight:800;background:#333}
+#panel .b-LIVE{background:#c4302b}#panel .b-Connected{background:#1b6e2d}#panel .b-Reconnecting,#panel .b-Connecting{background:#8a6d00}#panel .b-Error{background:#8a1c1c}
+#panel pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,monospace;background:#0c0c0c;border-radius:10px;padding:10px;max-height:260px;overflow:auto;margin:6px 0}
+#panel .msg{color:#ffb347;font-size:14px;margin:6px 0;min-height:18px}
