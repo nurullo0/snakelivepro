@@ -44,7 +44,7 @@ const Gifts = {
 const Popup = {
   cfg: Object.assign({ ms: 3000, color: "#ffd23f", scale: 1, pos: "middle", anim: true, tpl: {} }, ld("popup", {})),
   TPL: { gift: "{user}|{gift}|{effect}", unmapped: "{user}|{gift}|no game effect assigned", superchat: "{user}|Super Chat {amount}|{comment}", supersticker: "{user}|Super Sticker {amount}|{alt}",
-    subscriber: "New subscriber!|{user}|thanks for subscribing!", membership: "{user}|Gifted {count} memberships|+{apples} gold apples", member: "{user}|{what}|welcome!",
+    subscriber: "New subscriber!|{user}|{msg}", membership: "{user}|Gifted {count} memberships|+{apples} gold apples", member: "{user}|{what}|welcome!",
     likegoal: "Like goal reached!|{likes} likes|+20 gold apples", level: "LEVEL {level}||", win: "YOU WIN! NEXT LEVEL {level}|{tier}", lose: "GAME OVER|LEVEL {level}" },
   ICONS: { superchat: "💬", supersticker: "🏷️", subscriber: "🔔", membership: "🎁", member: "⭐", likegoal: "👍", level: "🏁", unmapped: "🎁" },
   lines(kind, v) { const t = (this.cfg.tpl[kind] !== undefined ? this.cfg.tpl[kind] : this.TPL[kind]) || ""; return t.split("|").map(s => s.replace(/\{(\w+)\}/g, (m, k) => v[k] === undefined ? "" : String(v[k]))); },
@@ -90,7 +90,7 @@ const Queue = {
       case "gift_membership_received": return Object.assign(base, { text: "gift membership received", pk: "member", vars: { user, what: "Received a gift membership" }, pr: 1 });
       case "new_member": return Object.assign(base, { text: "new member", pk: "member", vars: { user, what: "New member " + (ev.level || "") }, pr: 1, note: true });
       case "member_milestone": return Object.assign(base, { text: "member milestone", pk: "member", vars: { user, what: (ev.months || "") + " months a member" }, pr: 1 });
-      case "subscriber": return Object.assign(base, { text: "new subscriber" + (ev.approx ? " (approximate)" : ""), pk: "subscriber", vars: { user: user || "A viewer" }, pr: 1, note: true });
+      case "subscriber": return Object.assign(base, { text: "new subscriber" + (ev.approx ? " (approximate)" : ""), pk: "subscriber", vars: { user: user || "A viewer", msg: test ? "Please subscribe!" : "thanks for subscribing!" }, pr: 1, note: true });
       case "chat_command": { if (!Gifts.chatCommands) return null; const g = Gifts.defs.find(x => x.cmd && "!" + x.cmd === ev.text); if (!g) return null; return this.fromDef(Object.assign(base, { cmdOnly: true }), g, " (chat command)"); }
       default: return null;
     }
@@ -120,7 +120,7 @@ const Queue = {
     if (this.paused || Date.now() < this.busyUntil || !this.items.length) return;
     const j = this.items.shift(); let ms = Popup.cfg.ms;
     try {
-      if (j.note) { $("nu").textContent = j.user || "@viewer"; $("nt").textContent = j.kind === "subscriber" ? "thanks for subscribing!" : "welcome!"; }
+      if (j.note) { $("nu").textContent = j.user || "@viewer"; $("nt").textContent = j.kind === "subscriber" ? j.vars.msg : "welcome!"; }
       if (j.def) $("nu").textContent = j.user || "@viewer", $("nt").textContent = j.def.name;
       ms = Popup.show(j.pk, j.vars, { icon: j.def ? Gifts.defs.indexOf(j.def) : undefined, ms: j.def ? Gifts.popupMs(j.def) || undefined : undefined });
       if (j.def) Snd.play("gift"); j.run && j.run(); this.log(j, "done");
