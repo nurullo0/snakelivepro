@@ -8,20 +8,25 @@ const ld = (k, d) => { try { const v = localStorage.getItem(k); return v === nul
 const sv = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
 const rnd = n => Math.random() * n | 0, sleep = ms => new Promise(r => setTimeout(r, ms));
 const cv = $("cv"), cx = cv.getContext("2d"); cv.width = cv.height = W;
-const CFG = { gap: 50, stepMs: 115, turboMs: 58, spawnMs: 2000, growEvery: 2 };   /* tunable constants */
+const CFG = { gap: 50, stepMs: 164, turboMs: 83, spawnMs: 2000, growEvery: 2 };   /* speed = 30% slower than before (115 / 58 ms) */   /* tunable constants */
 const S = { lvl: ld("lvl", 1), snake: [], dir: [1, 0], apples: [], cyc: null, pos: null, pre: 0, cnt: 0, sh: 250, ag: false, turbo: 0, paused: true, lock: 0, fx: [], eaten: 0 };
 
 /* ---------- sound engine: every sound has its own switch and volume ---------- */
 const Snd = (() => {
   let ac = null, last = {};
   const cfg = Object.assign({}, ...["move", "eat", "gift", "turbo", "bomb", "win", "lose", "level", "fart"].map(n => ({ [n]: { on: true, vol: .8 } })));
+  cfg.move.vol = .6; cfg.eat.vol = .7;   /* gentle defaults */
   const saved = ld("snd", {}); for (const k in saved) if (cfg[k]) Object.assign(cfg[k], saved[k]);
   const ctx = () => ac || (ac = new (window.AudioContext || window.webkitAudioContext)());
-  function tone(f, d, type, to, v) { try { const a = ctx(), t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); g.gain.setValueAtTime(.2 * v, t); g.gain.exponentialRampToValueAtTime(.001, t + d); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d); } catch (e) {} }
+  function tone(f, d, type, to, v) { try { const a = ctx(), t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.type = type || "sine"; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2 * v, t + .004); g.gain.exponentialRampToValueAtTime(.0005, t + d);   /* soft 4 ms attack: no harsh clicks */ o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d); } catch (e) {} }
   function noise(d, hz, v) { try { const a = ctx(), t = a.currentTime, len = a.sampleRate * d | 0, b = a.createBuffer(1, len, a.sampleRate), x = b.getChannelData(0); for (let i = 0; i < len; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2); const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(); s.buffer = b; f.type = "bandpass"; f.frequency.value = hz; g.gain.value = .9 * v; s.connect(f); f.connect(g); g.connect(a.destination); s.start(t); } catch (e) {} }
   const bank = {
-    move: v => tone(1500 + rnd(500), .03, "square", 0, v * .5),
-    eat: v => { noise(.11, 1400, v); tone(240, .07, "sine", 90, v); },
+    /* turn = premium mechanical keyboard "thock": key-down click + low body + soft key-up, slightly different every time */
+    move: v => { const k = 1 + (Math.random() - .5) * .16;
+      noise(.012, 2600 * k, v * .55); tone(190 * k, .09, "triangle", 95 * k, v * .9); setTimeout(() => noise(.008, 4200, v * .25), 55); },
+    /* apple = soft bubble pop: rising "bloop" and a tiny pop at the end, pitch varies a little */
+    eat: v => { const k = 1 + (Math.random() - .5) * .3;
+      tone(420 * k, .11, "sine", 980 * k, v * .8); setTimeout(() => tone(1500 * k, .05, "sine", 700, v * .25), 40); noise(.02, 5000, v * .12); },
     gift: v => tone(880, .12, "sine", 0, v),
     turbo: v => tone(500, .4, "square", 1200, v * .6),
     bomb: v => { noise(.5, 300, v); tone(90, .6, "sawtooth", 30, v); },
