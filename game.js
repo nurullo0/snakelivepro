@@ -103,13 +103,24 @@ function die() { if (S.lock) return; S.lock = 1; Snd.play("lose"); showBanner("l
 function rip() { const o = $("over"); o.textContent = ""; o.append("RIP", document.createElement("br"), "LIVE ⚰️"); o.style.display = "flex"; Snd.play("lose"); S.lock = 1; setTimeout(() => { o.style.display = "none"; S.lvl = 1; newLevel(); }, 3500); }
 function bomb() { const x = rnd(N), y = rnd(N); Snd.play("bomb"); S.fx.push({ t: "boom", x, y, u: Date.now() + 700 }); S.apples = S.apples.filter(a => Math.hypot(a.x - x, a.y - y) > 3); S.pre = Math.min(S.pre, S.apples.length); }
 
+/* ---------- control pad: lights up when the snake turns (like a person pressing it); the middle button pauses / resumes ---------- */
+const Ctl = {
+  key(d) { return d[0] === 1 ? "R" : d[0] === -1 ? "L" : d[1] === -1 ? "U" : "D"; },
+  flash(k) { const b = $("btn" + k); if (!b) return; b.classList.add("press"); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove("press"), 160); },
+  sync() { const b = $("btnP"), t = S.paused ? "▶\uFE0E" : "❚❚"; if (b.textContent !== t) b.textContent = t; },
+  init() {
+    ["U", "L", "R", "D"].forEach(k => $("btn" + k).addEventListener("pointerdown", () => Ctl.flash(k)));   /* looks pressed, but the snake keeps following its own path */
+    $("btnP").addEventListener("click", () => { S.paused ? Game.resume() : Game.pause(); Ctl.sync(); Ctl.flash("P"); });
+  }
+};
+
 /* ---------- one game step ---------- */
 function step() {
   if (S.paused || S.lock) return;
   const M = N * N, h = S.snake[0], ih = S.pos[h.y * N + h.x];
   if (S.snake.length >= M) return win();
   const c = S.cyc[(ih + 1) % M], pk = { x: c % N, y: c / N | 0 }, d = [pk.x - h.x, pk.y - h.y];
-  if (d[0] !== S.dir[0] || d[1] !== S.dir[1]) Snd.play("move");
+  if (d[0] !== S.dir[0] || d[1] !== S.dir[1]) { Snd.play("move"); Ctl.flash(Ctl.key(d)); }
   S.dir = d; S.snake.unshift(pk);
   const ai = S.apples.findIndex(a => a.x === pk.x && a.y === pk.y); let grow = false;
   if (ai >= 0) { S.apples.splice(ai, 1); S.eaten++; Snd.play("eat"); if (S.pre > 0) { S.pre--; grow = true; } else { S.cnt++; grow = S.cnt % CFG.growEvery === 0; } }
@@ -174,7 +185,7 @@ const Game = {
   start() {
     newLevel(); draw(); requestAnimationFrame(t => { lastT = t; loop(t); });
     if (!spawnTimer) spawnTimer = setInterval(() => { if (!S.paused && !S.lock && (S.pre <= 0 || !S.apples.length)) trailApple(1); }, CFG.spawnMs);
-    fit(); addEventListener("resize", fit);
+    fit(); addEventListener("resize", fit); Ctl.init(); setInterval(() => Ctl.sync(), 250);
   }
 };
 function fit() { const s = Math.min(innerWidth / 1080, innerHeight / 1920); $("stage").style.transform = "scale(" + s + ") translate(-50%,-50%)"; }
