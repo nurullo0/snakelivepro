@@ -55,7 +55,7 @@ const Popup = {
     if (o.icon !== undefined && ICON[o.icon]) gi.innerHTML = ICON[o.icon]; else { gi.textContent = this.ICONS[kind] || "🎁"; gi.style.fontSize = "150px"; }   /* ICON entries are constants of this file */
     const box = document.createElement("div"), b = document.createElement("b"), sp = document.createElement("span"), em = document.createElement("em");
     b.textContent = L[0] || ""; sp.textContent = L[1] || ""; em.textContent = L[2] || ""; box.append(b, sp, em); el.append(gi, box);
-    el.style.setProperty("--pc", this.cfg.color); el.style.setProperty("--pfs", this.cfg.scale); el.style.top = { top: "400px", middle: "760px", bottom: "1100px" }[this.cfg.pos] || "760px";
+    el.style.setProperty("--pc", this.cfg.color); el.style.setProperty("--pfs", this.cfg.scale); el.style.top = { top: "300px", middle: "660px", bottom: "1000px" }[this.cfg.pos] || "660px";
     el.style.display = "flex"; el.classList.remove("pop"); if (this.cfg.anim) { void el.offsetWidth; el.classList.add("pop"); }
     clearTimeout(this.t); this.t = setTimeout(() => { el.style.display = "none"; }, ms); return ms;
   }
@@ -63,6 +63,13 @@ const Popup = {
 Hooks.banner = (k, v) => Popup.lines(k, v);
 let levelSeen = false;
 Hooks.level = l => { if (levelSeen) Popup.show("level", { level: l }, { ms: 1500 }); levelSeen = true; };
+
+/* ---------- notification pill: shows an event for 5 s, then returns to the original "subscribe" text ---------- */
+const Note = {
+  u: $("nu").textContent, t: $("nt").textContent, tm: 0, ms: 5000,
+  show(u, t, ms) { $("nu").textContent = u; $("nt").textContent = t; clearTimeout(this.tm); this.tm = setTimeout(() => this.idle(), ms || this.ms); },
+  idle() { $("nu").textContent = this.u; $("nt").textContent = this.t; }
+};
 
 /* ---------- likes (real value comes only from YouTube; test likes are separate) ---------- */
 const Stats = {
@@ -120,8 +127,8 @@ const Queue = {
     if (this.paused || Date.now() < this.busyUntil || !this.items.length) return;
     const j = this.items.shift(); let ms = Popup.cfg.ms;
     try {
-      if (j.note) { $("nu").textContent = j.user || "@viewer"; $("nt").textContent = j.kind === "subscriber" ? j.vars.msg : "welcome!"; }
-      if (j.def) $("nu").textContent = j.user || "@viewer", $("nt").textContent = j.def.name;
+      if (j.note) Note.show(j.user || "@viewer", j.kind === "subscriber" ? j.vars.msg : "welcome!");
+      if (j.def) Note.show(j.user || "@viewer", j.def.name);
       ms = Popup.show(j.pk, j.vars, { icon: j.def ? Gifts.defs.indexOf(j.def) : undefined, ms: j.def ? Gifts.popupMs(j.def) || undefined : undefined });
       if (j.def) Snd.play("gift"); j.run && j.run(); this.log(j, "done");
     } catch (e) { this.log(j, "error: " + e.message); }
