@@ -3,31 +3,30 @@
 html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;color:#fff;-webkit-user-select:none;user-select:none}
 #stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;background:#000;transform-origin:0 0}
 .abs{position:absolute}
-#note{left:90px;top:227px;width:424px;height:78px;border:3px solid var(--red);border-radius:18px;background:#2a0a0a;display:flex;align-items:center;gap:14px;padding:0 14px;box-sizing:border-box;font-weight:800;line-height:1.05;transition:opacity .4s}
+#note{left:90px;top:127px;width:424px;height:78px;border:3px solid var(--red);border-radius:18px;background:#2a0a0a;display:flex;align-items:center;gap:14px;padding:0 14px;box-sizing:border-box;font-weight:800;line-height:1.05;transition:opacity .4s}
 #note b{display:block;font-size:30px;color:#ffc9a0}#note span{font-size:24px}#note i{font-size:44px;font-style:normal}
-#lvl{left:513px;top:242px;height:46px;padding:0 14px;border:3px solid var(--gold);border-radius:24px;color:var(--gold);font-size:30px;font-weight:900;line-height:46px;background:#1a1300}
-#cam{left:700px;top:164px;width:260px;height:146px;background:#111;overflow:hidden;border:2px solid #333}
+#lvl{left:513px;top:142px;height:46px;padding:0 14px;border:3px solid var(--gold);border-radius:24px;color:var(--gold);font-size:30px;font-weight:900;line-height:46px;background:#1a1300}
+#cam{left:690px;top:58px;width:299px;height:168px;background:#111;overflow:hidden;border:2px solid #333}
 #cam video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
 #cam em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;color:#666;font-size:22px}
-#gtxt{left:103px;top:318px;font-size:44px;font-weight:800}
-#likes{left:470px;top:335px;width:508px;height:40px;border:2px solid #555;border-radius:20px;background:#0d0d14;overflow:hidden}
+#gtxt{left:103px;top:218px;font-size:44px;font-weight:800}
+#likes{left:470px;top:235px;width:508px;height:40px;border:2px solid #555;border-radius:20px;background:#0d0d14;overflow:hidden}
 #likes u{position:absolute;inset:0 auto 0 0;background:#5a1a7a;width:0;transition:width .3s}
 #likes p{position:absolute;inset:0;margin:0;text-align:center;font-size:25px;font-weight:900;line-height:38px}
-.card{top:390px;width:106px;height:140px;border-radius:10px;background:#1b1b1b;text-align:center;cursor:pointer}
+.card{top:290px;width:106px;height:140px;border-radius:10px;background:#1b1b1b;text-align:center;cursor:pointer}
 .card .ic{font-size:64px;line-height:86px;height:86px}
 .card .nm{font-size:13px;color:#ddd;white-space:nowrap;overflow:hidden}
 .card .pr{font-size:17px;font-weight:800;margin-top:6px}
-.lab{top:535px;width:106px;text-align:center;font-size:19px;font-weight:800;line-height:23px;color:#eee}
-#game{left:105px;top:618px;width:868px;height:868px;border:4px solid var(--g);box-shadow:0 0 22px #39ff1488;box-sizing:content-box;margin:-4px 0 0 -4px}
+.lab{top:435px;width:106px;text-align:center;font-size:19px;font-weight:800;line-height:23px;color:#eee}
+#game{left:105px;top:518px;width:868px;height:868px;border:4px solid var(--g);box-shadow:0 0 22px #39ff1488;box-sizing:content-box;margin:-4px 0 0 -4px}
 #cv{width:868px;height:868px;display:block}
-#ban{left:117px;top:1000px;width:850px;height:175px;background:#fff;color:#000;text-align:center;display:none;box-sizing:border-box;padding-top:6px}
+#ban{left:117px;top:900px;width:850px;height:175px;background:#fff;color:#000;text-align:center;display:none;box-sizing:border-box;padding-top:6px}
 #ban h1{margin:0;font-size:80px;line-height:100px;font-weight:900;white-space:nowrap}#ban h2{margin:0;font-size:46px;color:#d0121b;font-weight:900;line-height:50px}
-#big{left:0;width:975px;text-align:right;top:1545px;font-size:108px;font-weight:400;font-family:Roboto,"Helvetica Neue",Arial,sans-serif;white-space:nowrap}
-#gg{left:555px;top:1683px;width:412px;height:97px;border:3px solid var(--gold);border-radius:18px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:0 16px;background:#150f00}
+#gg{left:334px;top:1415px;width:412px;height:97px;border:3px solid var(--gold);border-radius:18px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:0 16px;background:#150f00}
 #gg i{font-size:54px;font-style:normal}#gg b,#gg span{display:block;color:#ff6b3d;font-size:30px;line-height:36px;font-weight:900}
 .card svg{width:80px;height:80px;margin-top:4px}
-#chn{left:90px;top:150px;font-size:36px;font-weight:900;color:var(--gold);white-space:nowrap;max-width:600px;overflow:hidden}
-#gn{left:140px;top:760px;width:800px;height:260px;border:5px solid var(--gold);border-radius:30px;background:#1a0f00f2;display:none;align-items:center;gap:30px;padding:0 36px;box-sizing:border-box;z-index:4}
+#chn{left:90px;top:50px;font-size:36px;font-weight:900;color:var(--gold);white-space:nowrap;max-width:600px;overflow:hidden}
+#gn{left:140px;top:660px;width:800px;height:260px;border:5px solid var(--gold);border-radius:30px;background:#1a0f00f2;display:none;align-items:center;gap:30px;padding:0 36px;box-sizing:border-box;z-index:4}
 #gn .gi svg{width:170px;height:170px}#gn b{display:block;font-size:46px;color:var(--gold);white-space:nowrap}#gn span{display:block;font-size:54px;font-weight:900}#gn em{display:block;font-style:normal;font-size:36px;color:#9dff8a;margin-top:6px}
 .pop{animation:pop .35s}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 #over{inset:0;background:#000d;display:none;align-items:center;justify-content:center;font-size:190px;font-weight:900;color:var(--red);text-align:center;line-height:1.1;z-index:5}
@@ -53,3 +52,9 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:"Balo
 #panel .b-LIVE{background:#c4302b}#panel .b-Connected{background:#1b6e2d}#panel .b-Reconnecting,#panel .b-Connecting{background:#8a6d00}#panel .b-Error{background:#8a1c1c}
 #panel pre{white-space:pre-wrap;font:13px/1.5 ui-monospace,monospace;background:#0c0c0c;border-radius:10px;padding:10px;max-height:260px;overflow:auto;margin:6px 0}
 #panel .msg{color:#ffb347;font-size:14px;margin:6px 0;min-height:18px}
+
+/* snake control pad: it only mirrors the snake's turns (the snake plays itself); the middle button pauses / resumes */
+#dpad{left:367px;top:1535px;width:346px;height:346px;display:grid;grid-template-columns:repeat(3,110px);grid-template-rows:repeat(3,110px);gap:8px}
+#dpad button{border:3px solid #444;border-radius:24px;background:#1e1e1e;color:#fff;font-size:56px;line-height:1;padding:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;transition:background .08s,border-color .08s,transform .08s}
+#dpad button.press,#dpad button:active{background:#8c8c8c;border-color:#e6e6e6;transform:scale(.94)}
+#btnU{grid-area:1/2}#btnL{grid-area:2/1}#btnP{grid-area:2/2;background:#12301a;border-color:#2e7d45;font-size:48px}#btnR{grid-area:2/3}#btnD{grid-area:3/2}
