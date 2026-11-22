@@ -2,8 +2,8 @@
 /* Snake LIVE PRO - control panel (opened by pressing the top-left corner for 1.5 s) and application start-up. */
 const el = (tag, props, ...kids) => { const e = document.createElement(tag); Object.assign(e, props || {}); kids.forEach(k => e.append(k)); return e; };
 const Cam = {
-  cfg: Object.assign({ w: 260, x: 700, y: 164, on: false }, ld("cam", {})), stream: null,
-  apply() { const c = $("cam"); c.style.width = this.cfg.w + "px"; c.style.height = Math.round(this.cfg.w * 9 / 16) + "px"; c.style.left = this.cfg.x + "px"; c.style.top = this.cfg.y + "px"; sv("cam", this.cfg); },
+  cfg: Object.assign({ w: 299, x: 690, y: 58, on: false }, ld("cam2", {})), stream: null,
+  apply() { const c = $("cam"); c.style.width = this.cfg.w + "px"; c.style.height = Math.round(this.cfg.w * 9 / 16) + "px"; c.style.left = this.cfg.x + "px"; c.style.top = this.cfg.y + "px"; sv("cam2", this.cfg); },
   async toggle() {
     const v = $("vid"), em = document.querySelector("#cam em");
     if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; v.style.display = "none"; em.style.display = "flex"; em.textContent = "CAMERA"; this.cfg.on = false; this.apply(); return ""; }
